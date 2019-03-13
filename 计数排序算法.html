@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>计数排序算法</title>
+	<meta charset="utf-8">
+	<meta name="keywords" content="计数排序算法">
+</head>
+<body>
+	<script type="text/javascript">
+		var arr=[];
+		// 随机生成 10000 个在 [0,100000] 的随机数
+		for(var m=0;m<10000;m++){
+			var random=Math.ceil(Math.random()*100000);
+			arr.push(random);
+		}
+		console.log(arr);
+		// ------------------------------------------------------
+		var arr1=arr.slice(0);		// 不能使用var arr1 = arr;将导致浅拷贝,影响后面的算法结果
+		// console.log(arr1);
+
+		// 计数排序算法
+		function countingSort(array) {
+		    var len = array.length,
+		        B = [],
+		        C = [],
+		        min = max = array[0];
+		    console.time('计数排序耗时');
+		    for (var i = 0; i < len; i++) {
+		        min = min <= array[i] ? min : array[i];
+		        max = max >= array[i] ? max : array[i];
+		        C[array[i]] = C[array[i]] ? C[array[i]] + 1 : 1;
+		    }
+		    for (var j = min; j < max; j++) {
+		        C[j + 1] = (C[j + 1] || 0) + (C[j] || 0);
+		    }
+		    for (var k = len - 1; k >= 0; k--) {
+		        B[C[array[k]] - 1] = array[k];
+		        C[array[k]]--;
+		    }
+		    console.timeEnd('计数排序耗时');
+		    return B;
+		}
+
+		
+		
+		console.log(countingSort(arr1));
+	</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>桶排序算法</title>
+	<meta charset="utf-8">
+	<meta name="keywords" content="桶排序算法">
+</head>
+<body>
+	<script type="text/javascript">
+		var arr=[];
+		// 随机生成 10000 个在 [0,100000] 的随机数
+		for(var m=0;m<10000;m++){
+			var random=Math.ceil(Math.random()*100000);
+			arr.push(random);
+		}
+		console.log(arr);
+		// ------------------------------------------------------
+		var arr1=arr.slice(0);		// 不能使用var arr1 = arr;将导致浅拷贝,影响后面的算法结果
+		// console.log(arr1);
+
+		// 桶排序算法
+
+		/*方法说明：桶排序
+		@param  array 数组
+		@param  num   桶的数量*/
+		function bucketSort(array, num) {
+		    if (array.length <= 1) {
+		        return array;
+		    }
+		    var len = array.length, buckets = [], result = [], min = max = array[0], regex = '/^[1-9]+[0-9]*$/', space, n = 0;
+		    num = num || ((num > 1 && regex.test(num)) ? num : 10);
+		    console.time('桶排序耗时');
+		    for (var i = 1; i < len; i++) {
+		        min = min <= array[i] ? min : array[i];
+		        max = max >= array[i] ? max : array[i];
+		    }
+		    space = (max - min + 1) / num;
+		    for (var j = 0; j < len; j++) {
+		        var index = Math.floor((array[j] - min) / space);
+		        if (buckets[index]) {   //  非空桶，插入排序
+		            var k = buckets[index].length - 1;
+		            while (k >= 0 && buckets[index][k] > array[j]) {
+		                buckets[index][k + 1] = buckets[index][k];
+		                k--;
+		            }
+		            buckets[index][k + 1] = array[j];
+		        } else {    //空桶，初始化
+		            buckets[index] = [];
+		            buckets[index].push(array[j]);
+		        }
+		    }
+		    while (n < num) {
+		        result = result.concat(buckets[n]);
+		        n++;
+		    }
+		    console.timeEnd('桶排序耗时');
+		    return result;
+		}		
+		
+		console.log(bucketSort(arr1,4));
+	</script>
+</body>
+</html>

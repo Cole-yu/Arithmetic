@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>归并排序算法</title>
+	<meta charset="utf-8">
+	<meta name="keywords" content="归并排序算法">
+</head>
+<body>
+	<script type="text/javascript">
+		var arr=[];
+		// 随机生成 10000 个在 [0,100000] 的随机数
+		for(var m=0;m<10000;m++){
+			var random=Math.ceil(Math.random()*100000);
+			arr.push(random);
+		}
+		console.log(arr);
+		// ------------------------------------------------------
+		var arr1=arr.slice(0);		// 不能使用var arr1 = arr;将导致浅拷贝,影响后面的算法结果
+		// console.log(arr1);
+
+		// 归并排序算法
+		function mergeSort(arr) {  //采用自上而下的递归方法
+		    var len = arr.length;
+		    if(len < 2) {
+		        return arr;
+		    }
+		    var middle = Math.floor(len / 2),
+		        left = arr.slice(0, middle),
+		        right = arr.slice(middle);
+		    return merge(mergeSort(left), mergeSort(right));
+		}
+
+		function merge(left, right)
+		{
+		    var result = [];
+		    
+		    while (left.length && right.length) {
+		        if (left[0] <= right[0]) {
+		            result.push(left.shift());
+		        } else {
+		            result.push(right.shift());
+		        }
+		    }
+
+		    while (left.length){
+		        result.push(left.shift());
+		    }
+
+		    while (right.length){
+		        result.push(right.shift());
+		    }
+
+		    return result;
+		}
+
+		console.time('归并排序耗时');
+		console.log(mergeSort(arr1));
+		console.timeEnd('归并排序耗时');
+	</script>
+</body>
+</html>

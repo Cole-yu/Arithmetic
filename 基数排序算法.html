@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>基数排序算法</title>
+	<meta charset="utf-8">
+	<meta name="keywords" content="基数排序算法">
+</head>
+<body>
+	<script type="text/javascript">
+		var arr=[];
+		// 随机生成 10000 个在 [0,100000] 的随机数
+		for(var m=0;m<10000;m++){
+			var random=Math.ceil(Math.random()*100000);
+			arr.push(random);
+		}
+		console.log(arr);
+		// ------------------------------------------------------
+		var arr1=arr.slice(0);		// 不能使用var arr1 = arr;将导致浅拷贝,影响后面的算法结果
+		// console.log(arr1);
+
+		// 基数排序算法
+		function radixSort(arr, maxDigit) {
+		    var mod = 10;
+		    var dev = 1;
+		    var counter = [];
+		    console.time('基数排序耗时');
+		    for (var i = 0; i < maxDigit; i++, dev *= 10, mod *= 10) {
+		        for(var j = 0; j < arr.length; j++) {
+		            var bucket = parseInt((arr[j] % mod) / dev);
+		            if(counter[bucket]== null) {
+		                counter[bucket] = [];
+		            }
+		            counter[bucket].push(arr[j]);
+		        }
+		        var pos = 0;
+		        for(var j = 0; j < counter.length; j++) {
+		            var value = null;
+		            if(counter[j]!=null) {
+		                while ((value = counter[j].shift()) != null) {
+		                      arr[pos++] = value;
+		                }
+		          }
+		        }
+		    }
+		    console.timeEnd('基数排序耗时');
+		    return arr;
+		}
+		
+		console.log(radixSort(arr1,2));
+	</script>
+</body>
+</html>
