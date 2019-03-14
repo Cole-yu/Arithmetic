@@ -6,6 +6,16 @@
 	<meta name="keywords" content="希尔排序算法">
 </head>
 <body>
+	<p>
+		第一次选择适当的间隔 gap，将整个数组分成几个子序列，对每个子序列进行直接插入排序；
+		<br>
+		缩写间隔 gap,仍然分成几个子序列，对每个子序列进行直接插入排序；
+		<br>
+		继续缩小间隔 gap，直到 gap 小于或等于1。		
+		<br>
+		<br>
+		<a target="_blank" href="https://blog.csdn.net/weixin_37818081/article/details/79202115">参考链接</a>
+	</p>
 	<script type="text/javascript">
 		var arr=[];
 		// 随机生成 10000 个在 [0,100000] 的随机数
@@ -24,9 +34,12 @@
 		        temp,
 		        gap = 1;
 		    console.time('希尔排序耗时:');
+
+		    // 1*5+1=6 6*5+1=31 31*5+1=156 156*5+1=781
 		    while(gap < len/5) {          //动态定义间隔序列
 		        gap =gap*5+1;
 		    }
+		    
 		    for (gap; gap > 0; gap = Math.floor(gap/5)) {
 		        for (var i = gap; i < len; i++) {
 		            temp = arr[i];
